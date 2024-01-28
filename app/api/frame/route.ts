@@ -3,6 +3,11 @@ import { NextRequest, NextResponse } from 'next/server';
 //import {kv} from "@vercel/kv";
 import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
 
+
+const HUB_URL = process.env['HUB_URL'] || "nemes.farcaster.xyz:2283"
+const client = getSSLHubRpcClient(HUB_URL);
+
+
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imagesFolderLength = 2;
   const randomImage = `https://a-frame-in-100-lines-five.vercel.app/park-${Math.floor(Math.random() * imagesFolderLength) + 1}.png`;
@@ -18,19 +23,24 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   */
   let validatedMessage : Message | undefined = undefined;
   try {
-      const frameMessage = Message.decode(Buffer.from(req.body?.trustedData?.messageBytes || '', 'hex'));
+      const frameMessage = Message.decode(Buffer.from((req as any).body?.trustedData?.messageBytes || '', 'hex'));
       const result = await client.validateMessage(frameMessage);
       if (result.isOk() && result.value.valid) {
           validatedMessage = result.value.message;
       }
   } catch (e)  {
-      return res.status(400).send(`Failed to validate message: ${e}`);
+      return NextResponse.json({ message: `Failed to validate message: ${e}`}, { status: 400 });
   }
 
   const buttonId = validatedMessage?.data?.frameActionBody?.buttonIndex || 0;
   const fid = validatedMessage?.data?.fid || 0;
-  const imageId = req?.query?.id || '';
   
+  const url = new URL(req.url);
+  
+  const imageId = url.searchParams.get("id") || '';
+  
+  let wowowButtonText;
+  let mehButtonText;
   if (buttonId > 0 && buttonId < 3) {
       if (buttonId === 1) {
         wowowButtonText = 'wowow1';
