@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 
 const frameMetadata = getFrameMetadata({
   buttons: ['Next image'],
-  image: 'https://a-frame-in-100-lines/park-1.png',
-  post_url: 'https://a-frame-in-100-lines/api/frame',
+  image: 'https://a-frame-in-100-lines-five/park-1.png',
+  post_url: 'https://a-frame-in-100-lines-five/api/frame',
 });
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'valeska test',
     description: 'LFG!',
-    images: ['https://a-frame-in-100-lines/park-1.png'],
+    images: ['https://a-frame-in-100-lines-five/park-1.png'],
   },
   other: {
     ...frameMetadata,
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>jvaleska.test</h1>
+      <h1>jvaleska.tast</h1>
     </>
   );
 }
