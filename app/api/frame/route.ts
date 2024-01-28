@@ -47,7 +47,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (buttonId > 0 && buttonId < 3) {
     let multi = kv.multi();
     multi.hincrby(`imageId:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
-    multi.hset(`imageId:${imageId}:`, {[fid]: buttonId});
+    multi.hset(`imageId:${imageId}`, {[fid]: buttonId});
     await multi.exec(); 
   }  
 
@@ -61,7 +61,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     <meta property="fc:frame:image" content=${randomImage} />
     <meta property="fc:frame:button:1" content=${wowowButtonText} />
     <meta property="fc:frame:button:2" content=${mehButtonText} />
-    <meta property="fc:frame:post_url" content="https://a-frame-in-100-lines-five.vercel.app/api/frame" />
+    <meta property="fc:frame:post_url" content=${postUrl} />
   </head></html>`);
 }
 
