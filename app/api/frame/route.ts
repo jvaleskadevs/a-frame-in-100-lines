@@ -11,7 +11,7 @@ const client = getSSLHubRpcClient(HUB_URL);
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imagesFolderLength = 20;
   const randomIndex = Math.floor(Math.random() * imagesFolderLength) + 1;
-  const randomImage = `https://a-frame-in-100-lines-five.vercel.app/wowowcow-${randomIndex}.png`;
+  const randomImage = `https://wowow-or-meh.vercel.app/wowowcow-${randomIndex}.png`;
 
   /*
   let accountAddress = 'X';
@@ -54,7 +54,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const wowowButtonText = 'wowow';
   const mehButtonText = 'meh';
   
-  const postUrl = `https://a-frame-in-100-lines-five.vercel.app/api/frame?imageId=${randomIndex}`;
+  const postUrl = `https://wowow-or-meh.vercel.app/api/frame?imageId=${randomIndex}`;
 
   return new NextResponse(`<!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
