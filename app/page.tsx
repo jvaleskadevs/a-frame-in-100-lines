@@ -2,7 +2,7 @@ import { getFrameMetadata } from '@coinbase/onchainkit';
 import type { Metadata } from 'next';
 
 const imagesFolderLength = 2;
-const randomImage = `https://a-frame-in-100-lines-five.vercel.app/park-${Math.floor(Math.random() % imagesFolderLength)}.png`;
+const randomImage = `https://a-frame-in-100-lines-five.vercel.app/park-${Math.floor(Math.random() * imagesFolderLength) + 1}.png`;
 
 const frameMetadata = getFrameMetadata({
   buttons: ['wowow', 'meh'],

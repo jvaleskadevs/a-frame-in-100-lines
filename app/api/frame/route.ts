@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imagesFolderLength = 2;
-  const randomImage = `https://a-frame-in-100-lines-five.vercel.app/park-${Math.floor(Math.random() % imagesFolderLength)}.png`;
+  const randomImage = `https://a-frame-in-100-lines-five.vercel.app/park-${Math.floor(Math.random() * imagesFolderLength) + 1}.png`;
 
   /*
   let accountAddress = 'X';
