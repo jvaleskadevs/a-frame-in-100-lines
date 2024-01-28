@@ -1,6 +1,6 @@
 import { getFrameAccountAddress } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
-//import {kv} from "@vercel/kv";
+import {kv} from "@vercel/kv";
 import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
 
 
@@ -10,7 +10,8 @@ const client = getSSLHubRpcClient(HUB_URL);
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imagesFolderLength = 20;
-  const randomImage = `https://a-frame-in-100-lines-five.vercel.app/wowowcow-${Math.floor(Math.random() * imagesFolderLength) + 1}.png`;
+  const randomIndex = Math.floor(Math.random() * imagesFolderLength) + 1;
+  const randomImage = `https://a-frame-in-100-lines-five.vercel.app/wowowcow-${randomIndex}.png`;
 
   /*
   let accountAddress = 'X';
@@ -39,21 +40,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   
   const url = new URL(req.url);
   
-  const imageId = url.searchParams.get("id") || '';
+  const imageId = url.searchParams.get("imageId") || '';
   
   buttonId = buttonId != 0 ? buttonId : ((req as any)?.body?.untrustedData?.buttonIndex || 0);
-  let wowowButtonText;
-  let mehButtonText;
+
   if (buttonId > 0 && buttonId < 3) {
-      if (buttonId === 1) {
-        wowowButtonText = 'wowow1';
-        mehButtonText = 'meh';        
-      } else {
-        wowowButtonText = 'wowow';
-        mehButtonText = 'meh1';      
-      }
-  }
+    let multi = kv.multi();
+    multi.hincrby(`imageId:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
+    multi.hset(`imageId:${imageId}:`, {[fid]: buttonId});
+    await multi.exec(); 
+  }  
+
+  const wowowButtonText = 'wowow';
+  const mehButtonText = 'meh';
   
+  const postUrl = `https://a-frame-in-100-lines-five.vercel.app/api/frame?imageId=${randomIndex}`;
 
   return new NextResponse(`<!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
