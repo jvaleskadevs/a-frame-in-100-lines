@@ -1,9 +1,12 @@
 import { getFrameMetadata } from '@coinbase/onchainkit';
 import type { Metadata } from 'next';
 
+const imagesFolderLength = 2;
+const randomImage = `https://a-frame-in-100-lines-five.vercel.app/park-${Math.floor(Math.random() % imagesFolderLength)}.png`;
+
 const frameMetadata = getFrameMetadata({
-  buttons: ['Next image'],
-  image: 'https://a-frame-in-100-lines-five.vercel.app/park-1.png',
+  buttons: ['wowow', 'meh'],
+  image: randomImage,
   post_url: 'https://a-frame-in-100-lines-five.vercel.app/api/frame',
 });
 
@@ -13,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'valeska test',
     description: 'LFG!',
-    images: ['https://a-frame-in-100-lines-five.vercel.app/park-1.png'],
+    images: [randomImage],
   },
   other: {
     ...frameMetadata,
