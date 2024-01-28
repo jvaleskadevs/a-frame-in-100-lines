@@ -12,9 +12,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   return new NextResponse(`<!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
-    <meta property="fc:frame:image" content="https://a-frame-in-100-lines-five/park-2.png" />
+    <meta property="fc:frame:image" content="https://a-frame-in-100-lines-five.vercel.app/park-2.png" />
     <meta property="fc:frame:button:1" content="${accountAddress}" />
-    <meta property="fc:frame:post_url" content="https://a-frame-in-100-lines-five/api/frame" />
+    <meta property="fc:frame:post_url" content="https://a-frame-in-100-lines-five.vercel.app/api/frame" />
   </head></html>`);
 }
 
