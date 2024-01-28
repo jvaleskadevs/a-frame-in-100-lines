@@ -1,5 +1,7 @@
 import { getFrameAccountAddress } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
+//import {kv} from "@vercel/kv";
+import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imagesFolderLength = 2;
