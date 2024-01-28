@@ -9,8 +9,8 @@ const client = getSSLHubRpcClient(HUB_URL);
 
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  const imagesFolderLength = 2;
-  const randomImage = `https://a-frame-in-100-lines-five.vercel.app/park-${Math.floor(Math.random() * imagesFolderLength) + 1}.png`;
+  const imagesFolderLength = 20;
+  const randomImage = `https://a-frame-in-100-lines-five.vercel.app/wowowcow-${Math.floor(Math.random() * imagesFolderLength) + 1}.png`;
 
   /*
   let accountAddress = 'X';
@@ -21,9 +21,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     console.error(err);
   }
   */
+  
   let validatedMessage : Message | undefined = undefined;
+  const body: { trustedData?: { messageBytes?: string } } = await req.json();
   try {
-      const frameMessage = Message.decode(Buffer.from((req as any)?.body?.trustedData?.messageBytes || '', 'hex'));
+      const frameMessage = Message.decode(Buffer.from(body?.trustedData?.messageBytes || '', 'hex'));
       const result = await client.validateMessage(frameMessage);
       if (result.isOk() && result.value.valid) {
           validatedMessage = result.value.message;
@@ -56,9 +58,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   return new NextResponse(`<!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
     <meta property="fc:frame:image" content=${randomImage} />
-    <meta property="fc:frame:button:1" content=${buttonId} />
+    <meta property="fc:frame:button:1" content=${wowowButtonText} />
     <meta property="fc:frame:button:2" content=${mehButtonText} />
-    <meta property="fc:frame:button:3" content=${imageId} />
     <meta property="fc:frame:post_url" content="https://a-frame-in-100-lines-five.vercel.app/api/frame" />
   </head></html>`);
 }
