@@ -23,7 +23,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   */
   let validatedMessage : Message | undefined = undefined;
   try {
-      const frameMessage = Message.decode(Buffer.from((req as any).body?.trustedData?.messageBytes || '', 'hex'));
+      const frameMessage = Message.decode(Buffer.from((req as any)?.body?.trustedData?.messageBytes || '', 'hex'));
       const result = await client.validateMessage(frameMessage);
       if (result.isOk() && result.value.valid) {
           validatedMessage = result.value.message;
@@ -32,13 +32,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ message: `Failed to validate message: ${e}`}, { status: 400 });
   }
 
-  const buttonId = validatedMessage?.data?.frameActionBody?.buttonIndex || 0;
+  let buttonId = validatedMessage?.data?.frameActionBody?.buttonIndex || 0;
   const fid = validatedMessage?.data?.fid || 0;
   
   const url = new URL(req.url);
   
   const imageId = url.searchParams.get("id") || '';
   
+  buttonId = buttonId != 0 ? buttonId : ((req as any)?.body?.untrustedData?.buttonIndex || 0);
   let wowowButtonText;
   let mehButtonText;
   if (buttonId > 0 && buttonId < 3) {
@@ -55,7 +56,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   return new NextResponse(`<!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
     <meta property="fc:frame:image" content=${randomImage} />
-    <meta property="fc:frame:button:1" content=${wowowButtonText} />
+    <meta property="fc:frame:button:1" content=${buttonId} />
     <meta property="fc:frame:button:2" content=${mehButtonText} />
     <meta property="fc:frame:button:3" content=${imageId} />
     <meta property="fc:frame:post_url" content="https://a-frame-in-100-lines-five.vercel.app/api/frame" />
