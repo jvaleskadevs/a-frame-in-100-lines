@@ -59,6 +59,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   return new NextResponse(`<!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
     <meta property="fc:frame:image" content=${randomImage} />
+    <meta property="fc:frame:image:aspect_ratio" content="1:1" />
     <meta property="fc:frame:button:1" content=${wowowButtonText} />
     <meta property="fc:frame:button:2" content=${mehButtonText} />
     <meta property="fc:frame:post_url" content=${postUrl} />
