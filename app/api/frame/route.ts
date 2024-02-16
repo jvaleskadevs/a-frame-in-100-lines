@@ -2,7 +2,8 @@ import { getFrameAccountAddress } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import {kv} from "@vercel/kv";
 import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
-import { HOST, PROJECT, MAX_IMAGES } from '../../config';
+//import { HOST, PROJECT, MAX_IMAGES } from '../../config';
+import { getRandomImage } from '../../utils';
 
 
 const HUB_URL = process.env['HUB_URL'] || "nemes.farcaster.xyz:2283"
@@ -35,14 +36,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     let multi = kv.multi();
     multi.hincrby(`dfbc:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
     multi.hset(`dfbc:${imageId}`, {[fid]: buttonId});
+    multi.hset("dfbc:allowlist", {[fid]: true});
     await multi.exec(); 
   }  
 
   const wowowButtonText = 'wowow';
   const mehButtonText = 'meh';
   
-  const randomIndex = Math.floor(Math.random() * MAX_IMAGES) + 1;
-  const randomImage = HOST + PROJECT + randomIndex.toString() + ".png";
+  //const randomIndex = Math.floor(Math.random() * MAX_IMAGES) + 1;
+  //const randomImage = HOST + PROJECT + randomIndex.toString() + ".png";
+  const { randomImage, randomIndex } = getRandomImage();
   
   const postUrl = `https://wowow-or-meh.vercel.app/api/frame?imageId=${randomIndex}`;
 
