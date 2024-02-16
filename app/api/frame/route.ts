@@ -2,6 +2,7 @@ import { getFrameAccountAddress } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import {kv} from "@vercel/kv";
 import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
+import { HOST, PROJECT } from '../../config';
 
 
 const HUB_URL = process.env['HUB_URL'] || "nemes.farcaster.xyz:2283"
@@ -9,9 +10,10 @@ const client = getSSLHubRpcClient(HUB_URL);
 
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  const imagesFolderLength = 20;
+  const imagesFolderLength = 839;
   const randomIndex = Math.floor(Math.random() * imagesFolderLength) + 1;
-  const randomImage = `https://wowow-or-meh.vercel.app/wowowcow-${randomIndex}.png`;
+  //const randomImage = `https://wowow-or-meh.vercel.app/wowowcow-${randomIndex}.png`;
+  const randomImage = HOST + PROJECT + randomIndex.toString() + ".png";
 
   /*
   let accountAddress = 'X';
@@ -46,8 +48,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   if (buttonId > 0 && buttonId < 3) {
     let multi = kv.multi();
-    multi.hincrby(`imageId:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
-    multi.hset(`imageId:${imageId}`, {[fid]: buttonId});
+    multi.hincrby(`dfbc:imageId:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
+    multi.hset(`dfbc:imageId:${imageId}`, {[fid]: buttonId});
+    multi.hincrby("dfbc:allowlist:", fid.toString(),  1);
     await multi.exec(); 
   }  
 
