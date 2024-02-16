@@ -27,19 +27,19 @@ interface IPlotProps {
 
 export default function ResultPlot(props: IPlotProps) {
   const { imageId, wowow, meh } = props;
-  const labels = ['wowow', 'meh'];
+  const labels = [`Image #${imageId}`];
   const data = {
     labels,
     datasets: [
       {
         label: 'wowow',
         data: [wowow],
-        backgroundColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgb(132, 99, 255)',
       },
       {
         label: 'meh',
         data: [meh],
-        backgroundColor: 'rgb(132, 99, 255)',
+        backgroundColor: 'rgb(255, 99, 132)',
       }
     ],
   };  

@@ -20,7 +20,7 @@ export default function ResultsPage() {
     <>
       <p>Results</p>
       { results && results.length > 0 && results.map((result, idx) => (
-          <div key={idx} className="max-w-sm">
+          <div key={idx} style={{ maxWidth: '360px' }}>
             <p>Image #{idx}</p>
             <p>wowow: {(result as any)?.wowow}</p>  
             <p>meh: {(result as any)?.meh}</p> 
