@@ -18,12 +18,11 @@ export default function ResultsPage() {
   return (
     <>
       <p>Results</p>
-      { results && results.length > 0 && results.map((result) => (
-          <>
-          <p>{typeof result}</p>
-          <p>{result}</p>
-          <p>wowow: {(result as any)?.wowow}</p>  
-          <p>meh: {(result as any)?.meh}</p> 
+      { results && results.length > 0 && results.map((result, idx) => (
+          <div key={idx}>
+            <p>Image #{idx}</p>
+            <p>wowow: {(result as any)?.wowow}</p>  
+            <p>meh: {(result as any)?.meh}</p> 
           </>   
       ))}
     </>
