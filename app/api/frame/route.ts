@@ -9,22 +9,7 @@ const HUB_URL = process.env['HUB_URL'] || "nemes.farcaster.xyz:2283"
 const client = getSSLHubRpcClient(HUB_URL);
 
 
-async function getResponse(req: NextRequest): Promise<NextResponse> {
-  const imagesFolderLength = 839;
-  const randomIndex = Math.floor(Math.random() * imagesFolderLength) + 1;
-  //const randomImage = `https://wowow-or-meh.vercel.app/wowowcow-${randomIndex}.png`;
-  const randomImage = HOST + PROJECT + randomIndex.toString() + ".png";
-
-  /*
-  let accountAddress = 'X';
-  try {
-    const body: { trustedData?: { messageBytes?: string } } = await req.json();
-    accountAddress = await getFrameAccountAddress(body, { NEYNAR_API_KEY: 'NEYNAR_API_DOCS' });
-  } catch (err) {
-    console.error(err);
-  }
-  */
-  
+async function getResponse(req: NextRequest): Promise<NextResponse> {  
   let validatedMessage : Message | undefined = undefined;
   const body: { trustedData?: { messageBytes?: string } } = await req.json();
   try {
@@ -48,14 +33,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   if (buttonId > 0 && buttonId < 3) {
     let multi = kv.multi();
-    multi.hincrby(`dfbc:imageId:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
-    multi.hset(`dfbc:imageId:${imageId}`, {[fid]: buttonId});
-    multi.hincrby("dfbc:allowlist:", fid.toString(),  1);
+    multi.hincrby(`dfbc:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
+    multi.hset(`dfbc:${imageId}`, {[fid]: buttonId});
     await multi.exec(); 
   }  
 
   const wowowButtonText = 'wowow';
   const mehButtonText = 'meh';
+  
+  const randomIndex = Math.floor(Math.random() * MAX_IMAGES) + 1;
+  const randomImage = HOST + PROJECT + randomIndex.toString() + ".png";
   
   const postUrl = `https://wowow-or-meh.vercel.app/api/frame?imageId=${randomIndex}`;
 
