@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
+import ResultPlot from './Plot';
 
 export default function ResultsPage() {
   const [results, setResults] = useState([]);
@@ -23,6 +24,11 @@ export default function ResultsPage() {
             <p>Image #{idx}</p>
             <p>wowow: {(result as any)?.wowow}</p>  
             <p>meh: {(result as any)?.meh}</p> 
+            <ResultPlot
+              imageId={idx} 
+              wowow={(result as any)?.wowow} 
+              meh={(result as any)?.meh}
+            />
           </div>   
       ))}
     </>
