@@ -23,7 +23,7 @@ export default function ResultsPage() {
             <p>Image #{idx}</p>
             <p>wowow: {(result as any)?.wowow}</p>  
             <p>meh: {(result as any)?.meh}</p> 
-          </>   
+          </div>   
       ))}
     </>
   );
