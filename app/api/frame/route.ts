@@ -2,7 +2,7 @@ import { getFrameAccountAddress } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import {kv} from "@vercel/kv";
 import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
-import { getRandomImage } from '../../utils';
+import { HOST, PROJECT, MAX_IMAGES } from '../../config';
 
 
 const HUB_URL = process.env['HUB_URL'] || "nemes.farcaster.xyz:2283"
@@ -10,10 +10,10 @@ const client = getSSLHubRpcClient(HUB_URL);
 
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  //const imagesFolderLength = 839;
-  //const randomIndex = Math.floor(Math.random() * imagesFolderLength) + 1;
+  const imagesFolderLength = 839;
+  const randomIndex = Math.floor(Math.random() * imagesFolderLength) + 1;
   //const randomImage = `https://wowow-or-meh.vercel.app/wowowcow-${randomIndex}.png`;
-  const { randomImage, randomIndex } = getRandomImage();//HOST + PROJECT + randomIndex.toString() + ".png";
+  const randomImage = HOST + PROJECT + randomIndex.toString() + ".png";
 
   /*
   let accountAddress = 'X';
