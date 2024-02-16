@@ -1,26 +1,3 @@
-//import React from 'react';
-//import Plot from 'react-plotly.js';
-
-/*
-export default function ResultPlot (props: IPlotProps) {
-  const { imageId, wowow, meh } = props;
-  return (
-    <Plot
-      data={[
-        {
-          x: ['wowow', 'meh'],
-          y: [wowow, meh],
-          type: 'scatter',
-          mode: 'lines+markers',
-          marker: {color: 'red'},
-        },
-        {type: 'bar', x: ['wowow', 'meh'], y: [wowow, meh]},
-      ]}
-      layout={ {width: 320, height: 240, title: `Image #${imageId}`} }
-    />
-  );
-}
-*/
 import React from 'react';
 import {
   Chart as ChartJS,
@@ -55,9 +32,14 @@ export default function ResultPlot(props: IPlotProps) {
     labels,
     datasets: [
       {
-        label: `Image #${imageId}`,
-        data: [wowow, meh],
+        label: 'wowow',
+        data: [wowow],
         backgroundColor: 'rgb(255, 99, 132)',
+      },
+      {
+        label: 'meh',
+        data: [meh],
+        backgroundColor: 'rgb(132, 99, 255)',
       }
     ],
   };  
@@ -65,7 +47,7 @@ export default function ResultPlot(props: IPlotProps) {
     plugins: {
       title: {
         display: true,
-        text: 'Bar Chart Results',
+        text: `Image #${imageId}`,
       },
     },
     responsive: true,
