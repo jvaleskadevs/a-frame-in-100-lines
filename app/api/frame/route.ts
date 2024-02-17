@@ -32,15 +32,19 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   
   buttonId = buttonId != 0 ? buttonId : ((req as any)?.body?.untrustedData?.buttonIndex || 0);
 
-  if (buttonId > 0 && buttonId < 3) {
-    let multi = kv.multi();
-    multi.hincrby(`dfbc:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
-    //multi.hset(`dfbc:${imageId}`, {[fid]: buttonId});
-    multi.hset("dfbc:allowlist", {[fid]: true});
-    await multi.exec(); 
-    //resultsDB.increment(imageId, buttonId == 1 ? "wowow" : "meh", 1);
-    //resultsDB.increment('0', fid.toString(), 1);
-  }  
+  try {
+    if (buttonId > 0 && buttonId < 3) {
+      let multi = kv.multi();
+      multi.hincrby(`dfbc:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
+      //multi.hset(`dfbc:${imageId}`, {[fid]: buttonId});
+      multi.hset("dfbc:allowlist", {[fid]: true});
+      await multi.exec(); 
+      //resultsDB.increment(imageId, buttonId == 1 ? "wowow" : "meh", 1);
+      //resultsDB.increment('0', fid.toString(), 1);
+    } 
+  } catch (e) {
+    console.error(e);
+  }
 
   const wowowButtonText = 'wowow';
   const mehButtonText = 'meh';
