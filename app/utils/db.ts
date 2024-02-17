@@ -40,9 +40,9 @@ function deleteAll() {
 
 
 function readData() {
-  return JSON.parse(fs.readFileSync('app/result/results.json', 'utf8'));
+  return JSON.parse(fs.readFileSync('app/results/results.json', 'utf8'));
 }
 
 function writeData(data: any) {
-  fs.writeFileSync('app/result/results.json', JSON.stringify(data, null, 4));
+  fs.writeFileSync('app/results/results.json', JSON.stringify(data, null, 4));
 }
