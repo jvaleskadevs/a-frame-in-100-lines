@@ -12,3 +12,5 @@ export async function GET() {
   */
   return NextResponse.json(resultsDB.getAll());
 }
+
+export const dynamic = 'force-dynamic';
