@@ -2,9 +2,8 @@ import { getFrameAccountAddress } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import {kv} from "@vercel/kv";
 import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
-//import { HOST, PROJECT, MAX_IMAGES } from '../../config';
 import { getRandomImage } from '../../utils';
-import { resultsDB } from '../../utils/db';
+//import { resultsDB } from '../../utils/db';
 
 
 const HUB_URL = process.env['HUB_URL'] || "nemes.farcaster.xyz:2283"
@@ -34,15 +33,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   buttonId = buttonId != 0 ? buttonId : ((req as any)?.body?.untrustedData?.buttonIndex || 0);
 
   if (buttonId > 0 && buttonId < 3) {
-    /*
     let multi = kv.multi();
     multi.hincrby(`dfbc:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
-    multi.hset(`dfbc:${imageId}`, {[fid]: buttonId});
+    //multi.hset(`dfbc:${imageId}`, {[fid]: buttonId});
     multi.hset("dfbc:allowlist", {[fid]: true});
     await multi.exec(); 
-    */
-    resultsDB.increment(imageId, buttonId == 1 ? "wowow" : "meh", 1);
-    resultsDB.increment('0', fid.toString(), 1);
+    //resultsDB.increment(imageId, buttonId == 1 ? "wowow" : "meh", 1);
+    //resultsDB.increment('0', fid.toString(), 1);
   }  
 
   const wowowButtonText = 'wowow';
