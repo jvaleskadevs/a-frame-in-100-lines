@@ -1,16 +1,16 @@
-import { getFrameAccountAddress } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
-import {kv} from "@vercel/kv";
-import {getSSLHubRpcClient, Message} from "@farcaster/hub-nodejs";
 import { getRandomImage } from '../../utils';
-//import { resultsDB } from '../../utils/db';
+/*
+import {kv} from "@vercel/kv";
+import { getSSLHubRpcClient, Message } from "@farcaster/hub-nodejs";
 
 
 const HUB_URL = process.env['HUB_URL'] || "nemes.farcaster.xyz:2283"
 const client = getSSLHubRpcClient(HUB_URL);
-
+*/
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {  
+/*
   let validatedMessage : Message | undefined = undefined;
   const body: { trustedData?: { messageBytes?: string } } = await req.json();
   try {
@@ -38,14 +38,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       multi.hincrby(`dfbc:${imageId}`, buttonId == 1 ? "wowow" : "meh", 1);
       //multi.hset(`dfbc:${imageId}`, {[fid]: buttonId});
       multi.hset("dfbc:allowlist", {[fid]: true});
-      await multi.exec(); 
-      //resultsDB.increment(imageId, buttonId == 1 ? "wowow" : "meh", 1);
-      //resultsDB.increment('0', fid.toString(), 1);
+      await multi.exec();
     } 
   } catch (e) {
     console.error(e);
   }
-
+*/
   const wowowButtonText = 'wowow';
   const mehButtonText = 'meh';
   
